@@ -1,6 +1,6 @@
 from typing import Dict, Union, List, Tuple
 import json
-from peewee import SqliteDatabase
+from peewee import SqliteDatabase, Model
 from settings.config import get_configs
 
 
@@ -17,5 +17,12 @@ class Database(SqliteDatabase, metaclass=MetaSingleton):
     super().__init__(args, kwargs)
 
 
+db = Database(get_configs("db_name"))
+
+
+class BaseModel(Model):
+  class Meta:
+    database = db
+
 def get_db() -> Database:
-  return Database(get_configs("db_name"))
+  return db
