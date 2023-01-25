@@ -1,20 +1,16 @@
-from typing import List
+from datetime import datetime
+from peewee import Model, CharField, ForeignKeyField, FloatField, DateTimeField
+from utils.database import BaseModel, get_db
+from models.Users import User
+from models.Categories import Category
 
 
-class ExpensesModel:
-  def __init__(self, user_id: int) -> None:
-    self.user_id = user_id
-    self.expenses = self._get_user_expenses()
+class Expense(BaseModel):
+  user_id = ForeignKeyField(User, backref="expenses")
+  cost = FloatField()
+  datetime = DateTimeField()
 
-  def _get_user_expenses(self) -> List[str]:
+  @staticmethod
+  def add_new_expense(cls, user_id: int, category_id: int, cost: float, \
+    datetime: datetime) -> int:
     pass
-
-
-
-class Expense:
-  def __init__(self, user_id: int, category: str, cost: float) -> None:
-    self.user_id = user_id
-    self.category = category
-    self.cost = cost
-
-  
