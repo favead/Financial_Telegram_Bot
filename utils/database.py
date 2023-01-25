@@ -1,6 +1,6 @@
 from typing import Dict, Union, List, Tuple
 import json
-from tinydb import TinyDB, Query
+from peewee import SqliteDatabase
 from settings.config import get_configs
 
 
@@ -12,9 +12,7 @@ class MetaSingleton(type):
     return cls._instances[cls]
 
 
-class Database(TinyDB, metaclass=MetaSingleton):
-  __INSTANCE = None
-
+class Database(SqliteDatabase, metaclass=MetaSingleton):
   def __init__(self, *args, **kwargs) -> None:
     super().__init__(args, kwargs)
 
